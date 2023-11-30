@@ -3,28 +3,28 @@ package com.core.constant;
 /**
  * @author xiongke
  */
-public interface RedisConstant {
+public class RedisConstant {
 
-    long CODE_EXPIRE_TIME = 15 * 60;
+    public static final long CODE_EXPIRE_TIME = 15 * 60;
 
-    String USER_CODE_KEY = "code:";
+    public static final String USER_CODE_KEY = "code:";
 
-    String BLOG_VIEWS_COUNT = "blog_views_count";
+    public static final String BLOG_VIEWS_COUNT = "blog_views_count";
 
-    String ARTICLE_VIEWS_COUNT = "article_views_count";
+    public static final String ARTICLE_VIEWS_COUNT = "article_views_count";
 
-    String WEBSITE_CONFIG = "website_config";
+    public static final String WEBSITE_CONFIG = "website_config";
 
-    String USER_AREA = "user_area";
+    public static final String USER_AREA = "user_area";
 
-    String VISITOR_AREA = "visitor_area";
+    public static final String VISITOR_AREA = "visitor_area";
 
-    String ABOUT = "about";
+    public static final String ABOUT = "about";
 
-    String UNIQUE_VISITOR = "unique_visitor";
+    public static final String UNIQUE_VISITOR = "unique_visitor";
 
-    String LOGIN_USER = "login_user";
+    public static final String LOGIN_USER = "login_user";
 
-    String ARTICLE_ACCESS = "article_access:";
+    public static final String ARTICLE_ACCESS = "article_access:";
 
 }

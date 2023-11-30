@@ -3,18 +3,18 @@ package com.core.constant;
 /**
  * @author xiongke
  */
-public interface ScheduleConstant {
+public class ScheduleConstant {
 
-    int MISFIRE_DEFAULT = 0;
+    public static final int MISFIRE_DEFAULT = 0;
 
-    int MISFIRE_IGNORE_MISFIRES = 1;
+    public static final int MISFIRE_IGNORE_MISFIRES = 1;
 
-    int MISFIRE_FIRE_AND_PROCEED = 2;
+    public static final int MISFIRE_FIRE_AND_PROCEED = 2;
 
-    int MISFIRE_DO_NOTHING = 3;
+    public static final int MISFIRE_DO_NOTHING = 3;
 
-    String TASK_CLASS_NAME = "TASK_CLASS_NAME";
+    public static final String TASK_CLASS_NAME = "TASK_CLASS_NAME";
 
-    String TASK_PROPERTIES = "TASK_PROPERTIES";
+    public static final String TASK_PROPERTIES = "TASK_PROPERTIES";
 
 }

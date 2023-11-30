@@ -3,18 +3,36 @@ package com.core.constant;
 /**
  * @author xiongke
  */
-public interface RabbitMQConstant {
+public class RabbitMQConstant {
 
-    String MAXWELL_QUEUE = "maxwell_queue";
+    /**
+     * maxwell队列
+     */
+    public static final String MAXWELL_QUEUE = "maxwell_queue";
 
-    String MAXWELL_EXCHANGE = "maxwell_exchange";
+    /**
+     * maxwell交换机
+     */
+    public static final String MAXWELL_EXCHANGE = "maxwell_exchange";
 
-    String EMAIL_QUEUE = "email_queue";
+    /**
+     * email队列
+     */
+    public static final String EMAIL_QUEUE = "email_queue";
 
-    String EMAIL_EXCHANGE = "email_exchange";
+    /**
+     * email交换机
+     */
+    public static final String EMAIL_EXCHANGE = "email_exchange";
 
-    String SUBSCRIBE_QUEUE = "subscribe_queue";
+    /**
+     * subscribe订阅队列
+     */
+    public static final String SUBSCRIBE_QUEUE = "subscribe_queue";
 
-    String SUBSCRIBE_EXCHANGE = "subscribe_exchange";
+    /**
+     * subscribe交换机
+     */
+    public static final String SUBSCRIBE_EXCHANGE = "subscribe_exchange";
 
 }
