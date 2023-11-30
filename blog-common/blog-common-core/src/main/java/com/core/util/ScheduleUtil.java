@@ -1,11 +1,17 @@
 package com.core.util;
 
 
-import com.core.commonenum.JobStatusEnum;
-import com.core.constant.ScheduleConstant;
+import com.api.enums.JobStatusEnum;
+import com.api.constant.ScheduleConstant;
+import com.core.exception.TaskException;
 import com.core.model.JobBO;
+import com.core.quartz.QuartzDisallowConcurrentExecution;
+import com.core.quartz.QuartzJobExecution;
 import org.quartz.*;
 
+/**
+ * @author xiongke
+ */
 public class ScheduleUtil {
 
     private static Class<? extends org.quartz.Job> getQuartzJobClass(JobBO job) {

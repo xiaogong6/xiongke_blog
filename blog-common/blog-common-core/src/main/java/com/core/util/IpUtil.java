@@ -1,7 +1,7 @@
 package com.core.util;
 
+import com.api.constant.CommonConstant;
 import eu.bitwalker.useragentutils.UserAgent;
-import com.core.constant.CommonConstant;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,7 @@
 package com.core.util;
 
-import com.dto.user.UserDetailsDTO;
+
+import com.api.dto.user.UserDetailsDTO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

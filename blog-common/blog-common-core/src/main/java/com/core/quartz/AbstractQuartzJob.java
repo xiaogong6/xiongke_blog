@@ -1,11 +1,13 @@
 package com.core.quartz;
 
-import com.aurora.constant.ScheduleConstant;
-import com.aurora.entity.Job;
-import com.aurora.entity.JobLog;
-import com.aurora.mapper.JobLogMapper;
-import com.aurora.util.ExceptionUtil;
-import com.aurora.util.SpringUtil;
+import com.blog.mapper.JobLogMapper;
+import com.blog.modle.entity.JobLog;
+import com.api.constant.ScheduleConstant;
+import com.core.model.JobBO;
+import com.core.model.JobLogBO;
+import com.core.util.BeanCopyUtil;
+import com.core.util.ExceptionUtil;
+import com.core.util.SpringUtil;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
@@ -14,8 +16,9 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
 
-import static com.aurora.constant.CommonConstant.ONE;
-import static com.aurora.constant.CommonConstant.ZERO;
+import static com.api.constant.CommonConstant.ONE;
+import static com.api.constant.CommonConstant.ZERO;
+
 
 public abstract class AbstractQuartzJob implements org.quartz.Job {
 
@@ -25,7 +28,7 @@ public abstract class AbstractQuartzJob implements org.quartz.Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        Job job = new Job();
+        JobBO job = new JobBO();
         BeanUtils.copyProperties(context.getMergedJobDataMap().get(ScheduleConstant.TASK_PROPERTIES), job);
         try {
             before(context, job);
@@ -37,14 +40,14 @@ public abstract class AbstractQuartzJob implements org.quartz.Job {
         }
     }
 
-    protected void before(JobExecutionContext context, Job job) {
+    protected void before(JobExecutionContext context, JobBO job) {
         THREAD_LOCAL.set(new Date());
     }
 
-    protected void after(JobExecutionContext context, Job job, Exception e) {
+    protected void after(JobExecutionContext context, JobBO job, Exception e) {
         Date startTime = THREAD_LOCAL.get();
         THREAD_LOCAL.remove();
-        final JobLog jobLog = new JobLog();
+        final JobLogBO jobLog = new JobLogBO();
         jobLog.setJobId(job.getId());
         jobLog.setJobName(job.getJobName());
         jobLog.setJobGroup(job.getJobGroup());
@@ -59,8 +62,9 @@ public abstract class AbstractQuartzJob implements org.quartz.Job {
         } else {
             jobLog.setStatus(ONE);
         }
-        SpringUtil.getBean(JobLogMapper.class).insert(jobLog);
+        JobLog jobLog1 = BeanCopyUtil.copyObject(jobLog, JobLog.class);
+        SpringUtil.getBean(JobLogMapper.class).insert(jobLog1);
     }
 
-    protected abstract void doExecute(JobExecutionContext context, Job job) throws Exception;
+    protected abstract void doExecute(JobExecutionContext context, JobBO job) throws Exception;
 }

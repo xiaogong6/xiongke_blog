@@ -2,16 +2,16 @@ package com.core.quartz;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import com.alibaba.fastjson.JSON;
-import com.aurora.entity.*;
-import com.aurora.mapper.ElasticsearchMapper;
-import com.aurora.mapper.UniqueViewMapper;
-import com.aurora.mapper.UserAuthMapper;
-import com.aurora.model.dto.ArticleSearchDTO;
-import com.aurora.model.dto.UserAreaDTO;
-import com.aurora.service.*;
-import com.aurora.util.BeanCopyUtil;
-import com.aurora.util.IpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.blog.mapper.ElasticsearchMapper;
+import com.blog.mapper.UniqueViewMapper;
+import com.blog.mapper.UserAuthMapper;
+import com.blog.modle.entity.*;
+import com.blog.modle.es.ArticleSearch;
+import com.blog.service.*;
+import com.core.util.BeanCopyUtil;
+import com.core.util.IpUtil;
+import com.api.dto.user.UserAreaDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.aurora.constant.CommonConstant.UNKNOWN;
-import static com.aurora.constant.RedisConstant.*;
+import static com.api.constant.CommonConstant.UNKNOWN;
+import static com.api.constant.RedisConstant.*;
+
 
 @Slf4j
 @Component("auroraQuartz")
@@ -128,11 +129,11 @@ public class AuroraQuartz {
         roleResourceService.saveBatch(roleResources);
     }
 
-    public void importDataIntoES() {
+    public void importDataIntoEs() {
         elasticsearchMapper.deleteAll();
         List<Article> articles = articleService.list();
         for (Article article : articles) {
-            elasticsearchMapper.save(BeanCopyUtil.copyObject(article, ArticleSearchDTO.class));
+            elasticsearchMapper.save(BeanCopyUtil.copyObject(article, ArticleSearch.class));
         }
     }
 }
