@@ -5,12 +5,10 @@
     <parent>
         <groupId>com.blog</groupId>
         <artifactId>blog-common</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>${revision}</version>
     </parent>
-    <groupId>com.rabbitmq</groupId>
     <artifactId>blog-common-rabbitmq</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>blog-common-rabbitmq</name>
     <description>blog-common-rabbitmq</description>
     <properties>
