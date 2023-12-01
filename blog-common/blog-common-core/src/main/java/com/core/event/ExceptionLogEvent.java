@@ -1,6 +1,6 @@
 package com.core.event;
 
-import com.core.model.bo.ExceptionLogBO;
+import com.core.modle.bo.ExceptionLogBO;
 import org.springframework.context.ApplicationEvent;
 
 /**

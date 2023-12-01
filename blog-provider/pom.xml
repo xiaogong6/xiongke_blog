@@ -20,6 +20,11 @@
             <artifactId>blog-common-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.blog</groupId>
+            <artifactId>blog-server</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

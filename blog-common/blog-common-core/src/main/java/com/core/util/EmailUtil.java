@@ -1,6 +1,6 @@
 package com.core.util;
 
-import com.core.model.bo.EmailBO;
+import com.core.modle.bo.EmailBO;
 import jakarta.annotation.Resource;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

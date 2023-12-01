@@ -1,10 +1,12 @@
 package com.core.quartz;
 
 import com.api.constant.ScheduleConstant;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.core.model.bo.JobBO;
-import com.core.model.bo.JobLogBO;
+import com.core.convert.CoreConvert;
+import com.core.mapper.JobLogMapper;
+import com.core.modle.bo.JobBO;
+import com.core.modle.bo.JobLogBO;
 import com.core.util.ExceptionUtil;
+import com.core.util.SpringUtil;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
@@ -62,12 +64,10 @@ public abstract class AbstractQuartzJob implements Job {
         } else {
             jobLog.setStatus(ONE);
         }
-        // SpringUtil.getBean(JobLogMapper.class).insert(jobLog1);
-        getService().save(jobLog);
+        SpringUtil.getBean(JobLogMapper.class).insert(CoreConvert.INSTANCE.converToJobLog(jobLog));
     }
 
     protected abstract void doExecute(JobExecutionContext context, JobBO job) throws Exception;
 
-    protected abstract <T> IService<T> getService();
 
 }

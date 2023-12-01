@@ -1,7 +1,7 @@
 package com.blog.convert;
 
 import com.blog.modle.bo.UserAuthBO;
-import com.blog.modle.entity.UserAuth;
+import com.core.modle.entity.UserAuth;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

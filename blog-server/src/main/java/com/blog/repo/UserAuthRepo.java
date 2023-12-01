@@ -1,7 +1,7 @@
 package com.blog.repo;
 
-import com.blog.mapper.UserAuthMapper;
-import com.blog.modle.entity.UserAuth;
+import com.core.mapper.UserAuthMapper;
+import com.core.modle.entity.UserAuth;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
 

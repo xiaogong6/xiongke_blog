@@ -12,7 +12,7 @@ import com.api.vo.user.UserVO;
 import com.blog.repo.UserAuthRepo;
 import com.blog.convert.ServiceConvert;
 import com.blog.modle.bo.UserAuthBO;
-import com.blog.modle.entity.UserAuth;
+import com.core.modle.entity.UserAuth;
 import com.blog.service.UserAuthService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

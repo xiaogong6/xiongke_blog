@@ -69,8 +69,8 @@
                 <version>${nacos.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>guava</artifactId>
                         <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -80,8 +80,8 @@
                 <version>${seata.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>druid</artifactId>
                         <groupId>com.alibaba</groupId>
+                        <artifactId>druid</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -121,8 +121,8 @@
                 <version>${knife4j.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>lombok</artifactId>
                         <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -132,8 +132,8 @@
                 <version>${knife4j.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>lombok</artifactId>
                         <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -158,8 +158,8 @@
                 <version>${elasticsearch.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>commons-logging</artifactId>
                         <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>

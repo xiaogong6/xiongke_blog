@@ -3,7 +3,7 @@ package com.blog.aspect;
 import com.alibaba.fastjson.JSON;
 import com.core.annotation.OptLog;
 import com.core.event.OperationLogEvent;
-import com.core.model.bo.OperationLogBO;
+import com.core.modle.bo.OperationLogBO;
 import com.core.util.IpUtil;
 import com.core.util.UserUtil;
 import io.swagger.annotations.Api;

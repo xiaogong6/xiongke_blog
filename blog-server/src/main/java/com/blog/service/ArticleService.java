@@ -2,9 +2,6 @@ package com.blog.service;
 
 
 import com.api.dto.article.*;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.blog.modle.entity.Article;
-import com.blog.modle.es.ArticleSearch;
 import com.api.dto.base.PageResultDTO;
 import com.api.dto.other.TopAndFeaturedArticlesDTO;
 import com.api.vo.article.ArticlePasswordVO;
@@ -12,10 +9,16 @@ import com.api.vo.article.ArticleTopFeaturedVO;
 import com.api.vo.article.ArticleVO;
 import com.api.vo.other.ConditionVO;
 import com.api.vo.other.DeleteVO;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.core.modle.entity.Article;
+import com.core.modle.es.ArticleSearch;
 
 import java.util.List;
 
 
+/**
+ * @author xiongke
+ */
 public interface ArticleService extends IService<Article> {
 
     TopAndFeaturedArticlesDTO listTopAndFeaturedArticles();

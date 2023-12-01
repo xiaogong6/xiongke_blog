@@ -1,6 +1,6 @@
 package com.core.util;
 
-import com.core.model.bo.JobBO;
+import com.core.modle.bo.JobBO;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;

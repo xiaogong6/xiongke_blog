@@ -2,7 +2,7 @@ package com.blog.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.blog.modle.entity.JobLog;
+import com.core.modle.entity.JobLog;
 import com.api.dto.base.PageResultDTO;
 import com.api.dto.job.JobLogDTO;
 import com.api.vo.job.JobLogSearchVO;

@@ -1,7 +1,7 @@
 package com.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.blog.modle.entity.Resource;
+import com.core.modle.entity.Resource;
 import com.api.dto.other.LabelOptionDTO;
 import com.api.dto.resource.ResourceDTO;
 import com.api.vo.other.ConditionVO;

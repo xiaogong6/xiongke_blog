@@ -2,7 +2,7 @@ package com.blog.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.core.event.ExceptionLogEvent;
-import com.core.model.bo.ExceptionLogBO;
+import com.core.modle.bo.ExceptionLogBO;
 import com.core.util.ExceptionUtil;
 import com.core.util.IpUtil;
 import io.swagger.annotations.ApiOperation;
