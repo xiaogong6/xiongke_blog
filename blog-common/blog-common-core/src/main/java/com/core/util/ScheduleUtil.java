@@ -4,7 +4,7 @@ package com.core.util;
 import com.api.enums.JobStatusEnum;
 import com.api.constant.ScheduleConstant;
 import com.core.exception.TaskException;
-import com.core.model.JobBO;
+import com.core.model.bo.JobBO;
 import com.core.quartz.QuartzDisallowConcurrentExecution;
 import com.core.quartz.QuartzJobExecution;
 import org.quartz.*;

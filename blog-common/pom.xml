@@ -5,10 +5,10 @@
     <parent>
         <groupId>com.blog</groupId>
         <artifactId>my_blog</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>blog-common</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>blog-common</name>
     <packaging>pom</packaging>
     <description>blog公共模块</description>
@@ -19,6 +19,7 @@
     <modules>
         <module>blog-common-rabbitmq</module>
         <module>blog-common-core</module>
+        <module>blog-common-security</module>
     </modules>
 
     <build>

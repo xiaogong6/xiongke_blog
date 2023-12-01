@@ -13,6 +13,8 @@ import org.lionsoul.ip2region.Util;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -26,6 +28,32 @@ public class IpUtil {
     private static DbSearcher searcher;
 
     private static Method method;
+
+    private static final String UNKNOWN = "unknown";
+
+    /**
+     * 得到用户的真实地址,如果有多个就取第一个
+     *
+     * @return
+     */
+    public static String getIpAddr() {
+        if (RequestContextHolder.getRequestAttributes() == null) {
+            return "";
+        }
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        String[] ips = ip.split(",");
+        return ips[0].trim();
+    }
 
     public static String getIpAddress(HttpServletRequest request) {
         String ipAddress = request.getHeader("X-Real-IP");

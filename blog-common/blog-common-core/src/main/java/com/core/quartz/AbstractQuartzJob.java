@@ -1,15 +1,12 @@
 package com.core.quartz;
 
-import com.blog.mapper.JobLogMapper;
-import com.blog.modle.entity.JobLog;
 import com.api.constant.ScheduleConstant;
-import com.core.model.JobBO;
-import com.core.model.JobLogBO;
-import com.core.util.BeanCopyUtil;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.core.model.bo.JobBO;
+import com.core.model.bo.JobLogBO;
 import com.core.util.ExceptionUtil;
-import com.core.util.SpringUtil;
+import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -20,14 +17,17 @@ import static com.api.constant.CommonConstant.ONE;
 import static com.api.constant.CommonConstant.ZERO;
 
 
-public abstract class AbstractQuartzJob implements org.quartz.Job {
+/**
+ * @author xiongke
+ */
+public abstract class AbstractQuartzJob implements Job {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
 
     private static final ThreadLocal<Date> THREAD_LOCAL = new ThreadLocal<>();
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
         JobBO job = new JobBO();
         BeanUtils.copyProperties(context.getMergedJobDataMap().get(ScheduleConstant.TASK_PROPERTIES), job);
         try {
@@ -62,9 +62,12 @@ public abstract class AbstractQuartzJob implements org.quartz.Job {
         } else {
             jobLog.setStatus(ONE);
         }
-        JobLog jobLog1 = BeanCopyUtil.copyObject(jobLog, JobLog.class);
-        SpringUtil.getBean(JobLogMapper.class).insert(jobLog1);
+        // SpringUtil.getBean(JobLogMapper.class).insert(jobLog1);
+        getService().save(jobLog);
     }
 
     protected abstract void doExecute(JobExecutionContext context, JobBO job) throws Exception;
+
+    protected abstract <T> IService<T> getService();
+
 }
