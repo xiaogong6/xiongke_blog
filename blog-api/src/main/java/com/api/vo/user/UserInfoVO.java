@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * @author xiongke
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -25,5 +28,8 @@ public class UserInfoVO {
 
     @ApiModelProperty(name = "webSite", value = "个人网站", dataType = "String")
     private String website;
+
+    @ApiModelProperty(name = "email", value = "电子邮件", dataType = "String")
+    private String email;
 
 }

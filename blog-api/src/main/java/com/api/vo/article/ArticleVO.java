@@ -9,8 +9,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * @author xiongke
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -58,4 +62,7 @@ public class ArticleVO {
 
     @ApiModelProperty(name = "password", value = "文章访问密码", dataType = "String")
     private String password;
+
+    @ApiModelProperty(value = "文章更新时间")
+    private LocalDateTime updateTime;
 }

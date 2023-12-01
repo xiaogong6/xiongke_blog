@@ -1,22 +1,25 @@
-package com.api.dto.article;
+package com.blog.modle.bo;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.api.dto.article.ArticleTagDTO;
+import com.api.dto.article.AuthorDTO;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @author xiongke
+ * @Program: xiongke_blog
+ * @Description:
+ * @Author: xiongke
+ * @Create: 2023-12-01
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ArticleCardDTO {
+public class ArticleCardBO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -1L;
 
     private Integer id;
 
