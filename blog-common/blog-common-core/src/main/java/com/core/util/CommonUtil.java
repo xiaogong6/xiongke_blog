@@ -4,6 +4,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author xiongke
+ */
 public class CommonUtil {
 
     public static boolean checkEmail(String username) {

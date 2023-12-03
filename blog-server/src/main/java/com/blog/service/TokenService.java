@@ -1,6 +1,7 @@
 package com.blog.service;
 
 import com.api.dto.user.UserDetailsDTO;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -15,4 +16,15 @@ public interface TokenService {
     void renewToken(UserDetailsDTO userDetailsDTO);
 
     String createToken(UserDetailsDTO userDetailsDTO);
+
+
+    String createToken(String subject);
+
+    void refreshToken(UserDetailsDTO userDetailsDTO);
+
+    Claims parseToken(String token);
+
+    UserDetailsDTO getUserDetailDTO(HttpServletRequest request);
+
+    void delLoginUser(Integer userId);
 }

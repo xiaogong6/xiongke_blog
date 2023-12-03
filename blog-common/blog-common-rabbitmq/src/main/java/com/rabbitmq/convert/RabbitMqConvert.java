@@ -1,6 +1,6 @@
 package com.rabbitmq.convert;
 
-import com.api.vo.article.ArticleVO;
+import com.api.dto.article.ArticleDTO;
 import com.core.modle.entity.Article;
 import org.apache.ibatis.annotations.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -16,5 +16,5 @@ public interface RabbitMqConvert {
 
     RabbitMqConvert INSTANCE = Mappers.getMapper(RabbitMqConvert.class);
 
-    Article converToArticle(ArticleVO data);
+    Article converToArticle(ArticleDTO data);
 }

@@ -2,7 +2,7 @@ package com.blog.service.impl;
 
 
 import com.blog.service.RedisService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("all")
 public class RedisServiceImpl implements RedisService {
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override

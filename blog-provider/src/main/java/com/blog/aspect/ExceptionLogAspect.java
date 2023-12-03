@@ -6,13 +6,13 @@ import com.core.modle.bo.ExceptionLogBO;
 import com.core.util.ExceptionUtil;
 import com.core.util.IpUtil;
 import io.swagger.annotations.ApiOperation;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -29,7 +29,7 @@ import java.util.Objects;
 @Component
 public class ExceptionLogAspect {
 
-    @Autowired
+    @Resource
     private ApplicationContext applicationContext;
 
     @Pointcut("execution(* com.blog.controller..*.*(..))")

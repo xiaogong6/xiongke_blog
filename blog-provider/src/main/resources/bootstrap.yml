@@ -1,0 +1,24 @@
+ip:
+  www.xiaogong.xyz
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${ip}:18848
+        namespace: 431d28fd-60bf-4c68-a316-039642283ef5
+      config:
+        server-addr: ${ip}:18848
+        group: DEFAULT_GROUP
+        file-extension: yaml
+        namespace: 431d28fd-60bf-4c68-a316-039642283ef5
+        extension-configs:
+          - data-id: datasource.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: mail.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: other.yml
+            group: DEFAULT_GROUP
+            refresh: true

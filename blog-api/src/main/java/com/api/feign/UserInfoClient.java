@@ -1,6 +1,6 @@
 package com.api.feign;
 
-import com.api.response.ServerResponseEntity;
+import com.api.vo.base.ResultVO;
 import com.api.vo.user.UserInfoVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,6 @@ import java.util.List;
 public interface UserInfoClient {
 
     @GetMapping(value = "/getUserInfoSubscribeList")
-    ServerResponseEntity<List<UserInfoVO>> getUserInfoSubscribeList();
+    ResultVO<List<UserInfoVO>> getUserInfoSubscribeList();
 
 }

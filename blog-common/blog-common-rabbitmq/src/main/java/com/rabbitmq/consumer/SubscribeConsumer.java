@@ -2,10 +2,10 @@ package com.rabbitmq.consumer;
 
 
 import com.alibaba.fastjson.JSON;
+import com.api.dto.article.ArticleDTO;
 import com.api.feign.ArticleClient;
 import com.api.feign.UserInfoClient;
-import com.api.response.ServerResponseEntity;
-import com.api.vo.article.ArticleVO;
+import com.api.vo.base.ResultVO;
 import com.api.vo.user.UserInfoVO;
 import com.core.modle.bo.EmailBO;
 import com.core.modle.entity.Article;
@@ -40,7 +40,7 @@ public class SubscribeConsumer {
     @Value("${website.url}")
     private String websiteUrl;
 
-    @Autowired
+    @Resource
     private EmailUtil emailUtil;
 
     @Resource
@@ -52,14 +52,14 @@ public class SubscribeConsumer {
     @RabbitHandler
     public void process(byte[] data) {
         Integer articleId = JSON.parseObject(new String(data), Integer.class);
-        ServerResponseEntity<ArticleVO> serverResponse = articleClient.getArticleById(articleId);
-        if (!serverResponse.isSuccess()) {
+        ResultVO<ArticleDTO> serverResponse = articleClient.getArticleById(articleId);
+        if (!serverResponse.getFlag()) {
             logger.error("查询文章信息失败,入参:{}", JSON.toJSONString(articleId));
             return;
         }
         Article article = RabbitMqConvert.INSTANCE.converToArticle(serverResponse.getData());
-        ServerResponseEntity<List<UserInfoVO>> responseEntity = userInfoClient.getUserInfoSubscribeList();
-        if (!responseEntity.isSuccess()) {
+        ResultVO<List<UserInfoVO>> responseEntity = userInfoClient.getUserInfoSubscribeList();
+        if (!responseEntity.getFlag()) {
             logger.error("查询订阅用户信息相应:{}", JSON.toJSONString(responseEntity));
             return;
         }

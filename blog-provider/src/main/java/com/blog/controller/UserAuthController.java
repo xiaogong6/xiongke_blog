@@ -7,6 +7,7 @@ import com.api.dto.user.UserAreaDTO;
 import com.api.dto.user.UserInfoDTO;
 import com.api.dto.user.UserLogoutStatusDTO;
 import com.api.feign.UserAuthClient;
+import com.api.response.ServerResponseEntity;
 import com.api.vo.base.ResultVO;
 import com.api.vo.other.ConditionVO;
 import com.api.vo.other.PasswordVO;
@@ -18,11 +19,10 @@ import com.blog.modle.bo.UserAuthBO;
 import com.blog.service.UserAuthService;
 import com.core.annotation.AccessLimit;
 import com.core.annotation.OptLog;
-import com.api.response.ServerResponseEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -38,7 +38,7 @@ import static com.api.constant.OptTypeConstant.UPDATE;
 @RestController
 public class UserAuthController implements UserAuthClient {
 
-    @Autowired
+    @Resource
     private UserAuthService userAuthService;
 
     @AccessLimit(seconds = 60, maxCount = 1)

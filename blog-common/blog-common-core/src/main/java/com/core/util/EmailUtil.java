@@ -29,7 +29,7 @@ public class EmailUtil {
     @Resource
     private JavaMailSender javaMailSender;
 
-    @Autowired
+    @Resource
     private TemplateEngine templateEngine;
 
     public void sendHtmlMail(EmailBO emailBO) {

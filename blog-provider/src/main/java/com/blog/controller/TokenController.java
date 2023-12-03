@@ -4,8 +4,10 @@ import com.api.dto.user.UserDetailsDTO;
 import com.api.feign.TokenClient;
 import com.blog.service.TokenService;
 import com.api.response.ServerResponseEntity;
+import io.swagger.annotations.Api;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Program: my_blog
@@ -13,6 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
  * @Author: xiongke
  * @Create: 2023-12-01
  */
+@Api(tags = "token-api")
+@RestController
 public class TokenController implements TokenClient {
 
     @Resource

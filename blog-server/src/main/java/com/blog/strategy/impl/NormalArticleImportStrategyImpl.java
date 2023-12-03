@@ -6,8 +6,8 @@ import com.api.vo.article.ArticleVO;
 import com.blog.service.ArticleService;
 import com.blog.strategy.ArticleImportStrategy;
 import com.core.exception.BizException;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +26,7 @@ import static com.api.enums.ArticleStatusEnum.DRAFT;
 @Service("normalArticleImportStrategyImpl")
 public class NormalArticleImportStrategyImpl implements ArticleImportStrategy {
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
     @Override

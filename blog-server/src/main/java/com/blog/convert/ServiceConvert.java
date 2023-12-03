@@ -3,7 +3,9 @@ package com.blog.convert;
 import com.blog.modle.bo.ArticleBO;
 import com.blog.modle.bo.UserAuthBO;
 import com.blog.modle.bo.UserInfoBO;
+import com.core.modle.bo.JobBO;
 import com.core.modle.entity.Article;
+import com.core.modle.entity.Job;
 import com.core.modle.entity.UserAuth;
 import com.core.modle.entity.UserInfo;
 import org.mapstruct.Mapper;
@@ -36,4 +38,8 @@ public interface ServiceConvert {
     UserInfoBO convert(UserInfo userInfo);
 
     List<UserInfoBO> converUserInfoBOList(List<UserInfo> list);
+
+    JobBO convert(Job job);
+
+    List<JobBO> converToJobBOList(List<Job> jobs);
 }

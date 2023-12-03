@@ -38,10 +38,10 @@ public class AuthFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
-    @Autowired
+    @Resource
     private AuthConfigAdapter authConfigAdapter;
 
-    @Autowired
+    @Resource
     private HttpHandler httpHandler;
 
     @Resource

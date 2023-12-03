@@ -1,13 +1,13 @@
 package com.core.handle;
 
 import cn.hutool.core.util.CharsetUtil;
-import com.core.exception.BizException;
 import com.api.response.ServerResponseEntity;
+import com.core.exception.BizException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -25,7 +25,7 @@ public class HttpHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(HttpHandler.class);
 
-    @Autowired
+    @Resource
     private ObjectMapper objectMapper;
 
     public <T> void printServerResponseToWeb(ServerResponseEntity<T> serverResponseEntity) {
