@@ -3,6 +3,10 @@ package com.api.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * @author xiongke
+ */
+
 @Getter
 @AllArgsConstructor
 public enum SearchModeEnum {

@@ -34,6 +34,7 @@ public class MaxWellConsumer {
                 elasticsearchMapper.save(BeanCopyUtil.copyObject(article, ArticleSearch.class));
                 break;
             case "delete":
+                // 获得删除的索引请求对象
                 elasticsearchMapper.deleteById(article.getId());
                 break;
             default:
