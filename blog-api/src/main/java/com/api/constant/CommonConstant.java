@@ -5,6 +5,8 @@ package com.api.constant;
  */
 public class CommonConstant {
 
+    public static final String INDEX = "article";
+
     public static final int ONE = 1;
 
     public static final int ZERO = 0;

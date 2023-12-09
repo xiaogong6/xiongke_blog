@@ -13,6 +13,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  main:
+    allow-circular-references: true
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml

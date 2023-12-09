@@ -1,7 +1,7 @@
 package com.core.mapper;
 
 import com.core.modle.es.ArticleSearch;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  * elasticsearch
  */
 @Repository
-public interface ElasticsearchMapper extends ElasticsearchRepository<ArticleSearch, Integer> {
+public interface ElasticsearchMapper extends CrudRepository<ArticleSearch, Integer> {
 
 }
