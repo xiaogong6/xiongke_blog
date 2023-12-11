@@ -13,6 +13,7 @@ import com.api.vo.other.ConditionVO;
 import com.api.vo.other.DeleteVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.blog.repo.ArticleRepo;
 import com.blog.service.ArticleService;
@@ -36,10 +37,12 @@ import com.core.util.PageUtil;
 import com.core.util.UserUtil;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.ObjectUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,6 +66,8 @@ import static com.api.enums.StatusCodeEnum.ARTICLE_ACCESS_FAIL;
  */
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
+
+    private final Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
     @Resource
     private ArticleRepo articleRepo;
@@ -215,16 +220,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             int year = createTime.getYear();
             String key = year + "-" + month;
             if (Objects.isNull(map.get(key))) {
-                List<ArticleCardDTO> articleCardDTOS = new ArrayList<>();
-                articleCardDTOS.add(article);
-                map.put(key, articleCardDTOS);
+                List<ArticleCardDTO> list = new ArrayList<>();
+                list.add(article);
+                map.put(key, list);
             } else {
                 map.get(key).add(article);
             }
         }
-        List<ArchiveDTO> archiveDTOs = new ArrayList<>();
-        map.forEach((key, value) -> archiveDTOs.add(ArchiveDTO.builder().Time(key).articles(value).build()));
-        archiveDTOs.sort((o1, o2) -> {
+        List<ArchiveDTO> list = new ArrayList<>();
+        map.forEach((key, value) -> list.add(ArchiveDTO.builder().Time(key).articles(value).build()));
+        list.sort((o1, o2) -> {
             String[] o1s = o1.getTime().split("-");
             String[] o2s = o2.getTime().split("-");
             int o1Year = Integer.parseInt(o1s[0]);
@@ -239,7 +244,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 return Integer.compare(o2Month, o1Month);
             }
         });
-        return new PageResultDTO<>(archiveDTOs, asyncCount.get());
+        return new PageResultDTO<>(list, asyncCount.get());
     }
 
     @SneakyThrows
@@ -285,13 +290,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public void updateArticleDelete(DeleteVO deleteVO) {
-        List<Article> articles = deleteVO.getIds().stream()
-                .map(id -> Article.builder()
-                        .id(id)
-                        .isDelete(deleteVO.getIsDelete())
-                        .build())
-                .collect(Collectors.toList());
-        this.updateBatchById(articles);
+        articleMapper.update(null, Wrappers.<Article>lambdaUpdate()
+                .in(ObjectUtils.isNotEmpty(deleteVO.getIds()), Article::getId, deleteVO.getIds())
+                .set(Article::getIsDelete, deleteVO.getIsDelete()));
     }
 
     @Override
@@ -329,7 +330,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 String url = uploadStrategyContext.executeUploadStrategy(article.getArticleTitle() + FileExtEnum.MD.getExtName(), inputStream, FilePathEnum.MD.getPath());
                 urls.add(url);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("导出文章异常:{}", e.getMessage());
                 throw new BizException("导出文章失败");
             }
         }
@@ -364,34 +365,36 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                     .eq(ArticleTag::getArticleId, articleVO.getId()));
         }
         List<String> tagNames = articleVO.getTagNames();
+        if (ObjectUtils.isEmpty(tagNames)) {
+            return;
+        }
+        List<Tag> existTags = tagService.list(new LambdaQueryWrapper<Tag>()
+                .in(Tag::getTagName, tagNames));
+        List<String> existTagNames = existTags.stream()
+                .map(Tag::getTagName)
+                .toList();
+        List<Integer> existTagIds = existTags.stream()
+                .map(Tag::getId)
+                .collect(Collectors.toList());
+        tagNames.removeAll(existTagNames);
         if (CollectionUtils.isNotEmpty(tagNames)) {
-            List<Tag> existTags = tagService.list(new LambdaQueryWrapper<Tag>()
-                    .in(Tag::getTagName, tagNames));
-            List<String> existTagNames = existTags.stream()
-                    .map(Tag::getTagName)
-                    .toList();
-            List<Integer> existTagIds = existTags.stream()
-                    .map(Tag::getId)
-                    .collect(Collectors.toList());
-            tagNames.removeAll(existTagNames);
-            if (CollectionUtils.isNotEmpty(tagNames)) {
-                List<Tag> tags = tagNames.stream().map(item -> Tag.builder()
-                                .tagName(item)
-                                .build())
-                        .collect(Collectors.toList());
-                tagService.saveBatch(tags);
-                List<Integer> tagIds = tags.stream()
-                        .map(Tag::getId)
-                        .toList();
-                existTagIds.addAll(tagIds);
-            }
-            List<ArticleTag> articleTags = existTagIds.stream().map(item -> ArticleTag.builder()
-                            .articleId(articleId)
-                            .tagId(item)
+            List<Tag> tags = tagNames.stream().map(item -> Tag.builder()
+                            .tagName(item)
                             .build())
                     .collect(Collectors.toList());
-            articleTagService.saveBatch(articleTags);
+            tagService.saveBatch(tags);
+            List<Integer> tagIds = tags.stream()
+                    .map(Tag::getId)
+                    .toList();
+            existTagIds.addAll(tagIds);
         }
+        List<ArticleTag> articleTags = existTagIds.stream().map(item -> ArticleTag.builder()
+                        .articleId(articleId)
+                        .tagId(item)
+                        .build())
+                .collect(Collectors.toList());
+        articleTagService.saveBatch(articleTags);
+
     }
 
 

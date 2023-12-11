@@ -13,6 +13,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 
+/**
+ * @author admin
+ */
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
