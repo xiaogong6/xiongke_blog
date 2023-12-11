@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.blog.strategy.SearchStrategy;
 import com.core.modle.es.ArticleSearch;
 import lombok.extern.log4j.Log4j2;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,19 +45,22 @@ public class EsSearchStrategyImpl implements SearchStrategy {
     }
 
     private SearchRequest buildRequest(String keywords) {
-        SearchRequest.Builder builder = getBuilder(keywords);
+        SearchRequest.Builder builder = new SearchRequest.Builder();
+        getBuilder(keywords, builder);
+        buildHighlight(builder);
+        return builder.build();
+    }
+
+    private void buildHighlight(SearchRequest.Builder builder) {
         // 字段高亮显示
         Highlight.Builder highlightBuilder = new Highlight.Builder();
         highlightBuilder.fields("articleTitle", f -> f.preTags(PRE_TAG).postTags(POST_TAG))
                 .fields("articleContent", f -> f.preTags(PRE_TAG).postTags(POST_TAG)
                         .fragmentSize(50)).requireFieldMatch(false);
         builder.highlight(highlightBuilder.build());
-        return builder.build();
     }
 
-    @NotNull
-    private SearchRequest.Builder getBuilder(String keywords) {
-        SearchRequest.Builder builder = new SearchRequest.Builder();
+    private void getBuilder(String keywords, SearchRequest.Builder builder) {
         // 添加索引
         builder.index(INDEX);
         // 构建查询条件
@@ -69,7 +71,6 @@ public class EsSearchStrategyImpl implements SearchStrategy {
                 .must(h -> h.match(f -> f.field("isDelete").query(FALSE)))
                 .must(h -> h.match(f -> f.field("status").query(PUBLIC.getStatus())))));
         builder.query(q -> q.bool(boolQuery.build()));
-        return builder;
     }
 
     private List<ArticleSearch> search(SearchRequest searchRequest) {
