@@ -1,7 +1,6 @@
 package com.blog.service.impl;
 
 
-import cn.hutool.core.bean.BeanUtil;
 import com.api.dto.base.PageResultDTO;
 import com.api.dto.job.JobDTO;
 import com.api.enums.JobStatusEnum;
@@ -31,7 +30,6 @@ import org.quartz.SchedulerException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -52,13 +50,10 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     public void init() {
         scheduler.clear();
         List<Job> jobs = jobMapper.selectList(null);
-        if (CollectionUtils.isEmpty(jobs)) {
-            return;
-        }
-        List<JobBO> boList = BeanUtil.copyToList(jobs, JobBO.class);
-        boList.forEach(b -> {
+        List<JobBO> jobBOList = ServiceConvert.INSTANCE.converToJobBOList(jobs);
+        jobBOList.forEach(x -> {
             try {
-                ScheduleUtil.createScheduleJob(scheduler, b);
+                ScheduleUtil.createScheduleJob(scheduler, x);
             } catch (SchedulerException | TaskException e) {
                 throw new RuntimeException(e);
             }
