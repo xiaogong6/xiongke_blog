@@ -1,6 +1,7 @@
 package com.blog.service.impl;
 
 
+import cn.hutool.core.bean.BeanUtil;
 import com.api.dto.base.PageResultDTO;
 import com.api.dto.job.JobDTO;
 import com.api.enums.JobStatusEnum;
@@ -27,10 +28,10 @@ import lombok.SneakyThrows;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -51,18 +52,20 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     public void init() {
         scheduler.clear();
         List<Job> jobs = jobMapper.selectList(null);
-        List<JobBO> jobBOList = ServiceConvert.INSTANCE.converToJobBOList(jobs);
-        jobBOList.forEach(x -> {
+        if (CollectionUtils.isEmpty(jobs)) {
+            return;
+        }
+        List<JobBO> boList = BeanUtil.copyToList(jobs, JobBO.class);
+        boList.forEach(b -> {
             try {
-                ScheduleUtil.createScheduleJob(scheduler, x);
-            } catch (SchedulerException e) {
-                throw new RuntimeException(e);
-            } catch (TaskException e) {
+                ScheduleUtil.createScheduleJob(scheduler, b);
+            } catch (SchedulerException | TaskException e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
+    @Override
     @SneakyThrows
     @Transactional(rollbackFor = Exception.class)
     public void saveJob(JobVO jobVO) {
